@@ -15,13 +15,9 @@ public class JpaMain {
         tx.begin(); // tx 시작
 
         try {
-            // EntityManager안에서 실제 동작하는 code는 여기에 작성
-            Member member = new Member();
-            // 멤버의 아이디와 이름 설정
-            member.setId(1L);
-            member.setName("HelloA");
-
-            em.persist(member); // 멤버 넣기(저장)
+            Member findMember = em.find(Member.class, 1L);
+            System.out.println("findMember.id = " + findMember.getId());
+            System.out.println("findMember.name = " + findMember.getName());
 
             tx.commit(); // 정상적일 때 저장, 문제가 생기면 Rollback(철회)
         } catch (Exception e) {
