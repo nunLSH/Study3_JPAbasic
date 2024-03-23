@@ -16,8 +16,8 @@ public class JpaMain {
 
         try {
             Member findMember = em.find(Member.class, 1L);
-            System.out.println("findMember.id = " + findMember.getId());
-            System.out.println("findMember.name = " + findMember.getName());
+
+            em.remove(findMember);
 
             tx.commit(); // 정상적일 때 저장, 문제가 생기면 Rollback(철회)
         } catch (Exception e) {
