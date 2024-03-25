@@ -19,15 +19,13 @@ public class JpaMain {
         try {
 
             // 영속
-            Member member1 = new Member(150L, "A");
-            Member member2 = new Member(160L, "B");
+            Member member = new Member(200L, "member200");
+            em.persist(member);
 
-            em.persist(member1);
-            em.persist(member2);
+            em.flush(); // 이 시점에 즉시 DB에 insert 쿼리가 날아감.
 
             System.out.println("====================");
-
-            tx.commit(); // 정상적일 때 저장, DB에 쿼리가 날라감. 문제가 생기면 Rollback(철회)
+            tx.commit(); // 그 다음에 DB transactiond이 커밋됨.
         } catch (Exception e) {
             tx.rollback(); // 문제가 생기면 철회
         } finally {
