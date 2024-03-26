@@ -19,10 +19,10 @@ public class JpaMain {
         try {
 
             // 영속
-            Member member = new Member(200L, "member200");
-            em.persist(member);
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAA");
 
-            em.flush(); // 이 시점에 즉시 DB에 insert 쿼리가 날아감.
+            em.detach(member);
 
             System.out.println("====================");
             tx.commit(); // 그 다음에 DB transactiond이 커밋됨.
