@@ -1,26 +1,29 @@
 package hellojpa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
-@Entity  // 이걸 넣어줘야 JPA를 처음 로딩할 때, JPA를 사용하는 클래스라는 것을 인지하고 관리함.
-// DB와 매핑되는 Member 클래스
+@Entity
+@SequenceGenerator(name = "MEMBER_SEQ_GENERATOR",
+        sequenceName = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR")
+    @Column(name = "MEMBER_ID")
     private Long id;
-    private String name;
 
-    public Member() {
-    }
+    @Column(name = "USERNAME")
+    private String username;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
 
-    // 필요한 Getter와 Setter 생성
+    @ManyToOne // Member의 입장에서 매핑 (Member가 many, Team이 one)
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
+
     public Long getId() {
         return id;
     }
@@ -29,11 +32,19 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
