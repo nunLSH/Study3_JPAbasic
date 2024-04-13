@@ -18,25 +18,28 @@ public class JpaMain {
 
         try {
 
-            // 저장
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
+            // 저장
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
             em.persist(member);
 
-            //영속성 컨텍스트 말고 DB에서 가져오는 것을 보고 싶다면 아래 2줄 추가 작성
+            team.addMember(member);
+
             em.flush();
             em.clear();
 
-            // 조회
-            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
 
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
+            System.out.println(" ============= ");
+            for (Member m : members) {
+                System.out.println("m = " + m.getUsername());
+            }
+            System.out.println(" ============= ");
 
             tx.commit(); // 그 다음에 DB transactiond이 커밋됨.
         } catch (Exception e) {
