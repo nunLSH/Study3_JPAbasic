@@ -17,8 +17,6 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
 
     @ManyToOne // Member의 입장에서 매핑 (Member가 many, Team이 one)
     @JoinColumn(name = "TEAM_ID")
