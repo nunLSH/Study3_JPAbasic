@@ -18,16 +18,20 @@ public class JpaMain {
 
         try {
 
-            // 회원 저장
-            Member member = saveMember(em);
+            Movie movie = new Movie();
+            movie.setDirector("aaa");
+            movie.setActor("bbb");
+            movie.setName("바람과 함께 사라지다");
+            movie.setPrice(10000);
 
-            // 팀 저장
-            Team team = new Team();
-            team.setName("teamA");
-            // team 테이블이 아닌 member 테이블이 update 됨
-            team.getMembers().add(member);
+            em.persist(movie);
 
-            em.persist(team);
+            em.flush();
+            em.clear();
+
+            // 조회
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie);
 
             tx.commit(); // 그 다음에 DB transactiond이 커밋됨.
         } catch (Exception e) {
