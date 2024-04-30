@@ -2,6 +2,7 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -10,7 +11,7 @@ import java.util.concurrent.locks.Lock;
 @Entity
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ", allocationSize = 1)
-public class Member {
+public class Member extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
